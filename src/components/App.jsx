@@ -44,7 +44,7 @@ const WaveInput = styled.input`
 	width: 200px;
 `
 
-const WaveButton = styled.input`
+const WaveButton = styled.button`
 	background-color: #0000ff33;
 	cursor: pointer;
 	display: block;
@@ -71,7 +71,13 @@ export default function App() {
 	let wavePortalContract = null
 
 	const showLoading = (message) => {
-		setLoading(`${loadingText}<br/>${message}`)
+		setLoading(
+			<React.Fragment>
+				{loadingText}
+				<br/>
+				{message}
+			</React.Fragment>
+		)
 	}
 
 	const hideLoading = () => setLoading(null)
@@ -100,7 +106,6 @@ export default function App() {
 	}
 
 	const getWaves = async () => {
-		
 		const wavePortalContract = await getWavePortalContract()
 
 		const allWaves = await wavePortalContract.getAllWaves()
@@ -117,6 +122,30 @@ export default function App() {
 				}
 			})
 		)
+
+		hideLoading()
+	}
+
+	const onNewWave = (from, messages, likes, timestamp) => {
+		console.log('NewWave', from, messages, likes, timestamp)
+		setWaves((waves) => {
+			const newState = []
+			console.log('waves', waves)
+			waves.forEach((wave) => {
+				if (wave.user !== from) {
+					newState.push(wave)
+				} else {
+					newState.push({
+						user: from,
+						subscribedAt: new Date(timestamp * 1000).toDateString(),
+						likes: likes.toNumber(),
+						messages: messages,
+					})
+				}
+			})
+			console.log('newState', newState)
+			return newState
+		})
 
 		hideLoading()
 	}
@@ -192,56 +221,33 @@ export default function App() {
 			showLoading(`Minerando... ${waveTxn.hash}`)
 
 			await waveTxn.wait()
-			showLoading(`Minerando -- ${waveTxn.hash}`)
 		} catch (error) {
 			console.log(error)
 		}
-
-		hideLoading()
 	}
 
 	const doLike = async (user) => {
-		setLoading(`${loadingText} Deixando Like 👍👍👍`)
+		showLoading('Deixando Like 👍👍👍')
 
 		try {
 			const wavePortalContract = await getWavePortalContract()
 
 			const waveTxn = await wavePortalContract.doLike(user)
-			setLoading(`${loadingText} Minerando... ${waveTxn.hash}`)
+			showLoading(`Minerando... ${waveTxn.hash}`)
 
 			await waveTxn.wait()
-			setLoading(`${loadingText} Minerando -- ${waveTxn.hash}`)
 		} catch (error) {
 			console.log(error)
 		}
-
-		setLoading(null)
 	}
 
 	useEffect(async () => {
 		await checkIfWalletIsConnected()
-		setLoading(null)
-	}, [])
-
-	useEffect(async () => {
+		hideLoading()
 		const wavePortalContract = await getWavePortalContract()
 
-		const onNewWave = (from, messages, likes, timestamp) => {
-			console.log('NewWave', from, messages, likes, timestamp)
-			const newState = []
-			waves.forEach((wave) => {
-				if (wave.user !== from) {
-					newState.push(wave)
-				} else {
-					newState.push({
-						user: from,
-						subscribedAt: new Date(timestamp * 1000).toDateString(),
-						likes: likes.toNumber(),
-						messages: messages,
-					})
-				}
-			})
-			setWaves(newState)
+		if (!wavePortalContract) {
+			return
 		}
 
 		wavePortalContract.on('NewWave', onNewWave)
@@ -258,9 +264,7 @@ export default function App() {
 	}
 
 	let connectButton = (
-		<button className='waveButton' onClick={connectWallet}>
-			Conectar carteira
-		</button>
+		<WaveButton onClick={connectWallet}>Conectar carteira</WaveButton>
 	)
 	let waveInterface = <React.Fragment></React.Fragment>
 	if (currentAccount) {
@@ -278,10 +282,12 @@ export default function App() {
 					placeholder='Digite a menssagem'
 					ref={messageRef}
 				/>
-				<WaveButton type='button' value='Dar Tchauzinho' />
+				<WaveButton>Dar Tchauzinho</WaveButton>
 			</form>
 		)
 	}
+
+	const allWaves = waves.map((wave) => Wave(wave, doLike))
 
 	return (
 		<MainContainer>
@@ -308,7 +314,7 @@ export default function App() {
 
 				<br />
 
-				{waves.map((wave) => Wave(wave, doLike))}
+				{allWaves}
 			</DataContainer>
 		</MainContainer>
 	)
