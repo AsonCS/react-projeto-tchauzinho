@@ -241,16 +241,19 @@ export default function App() {
 		}
 	}
 
-	useEffect(async () => {
-		await checkIfWalletIsConnected()
-		hideLoading()
-		const wavePortalContract = await getWavePortalContract()
-
-		if (!wavePortalContract) {
-			return
+	useEffect(() => {
+		async function init() {
+			await checkIfWalletIsConnected()
+			hideLoading()
+			const wavePortalContract = await getWavePortalContract()
+	
+			if (!wavePortalContract) {
+				return
+			}
+	
+			wavePortalContract.on('NewWave', onNewWave)
 		}
-
-		wavePortalContract.on('NewWave', onNewWave)
+		init()
 
 		return () => {
 			if (wavePortalContract) {
