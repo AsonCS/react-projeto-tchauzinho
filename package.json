@@ -1,8 +1,9 @@
 {
-	"name": "Projeto Tchauzinho",
+	"name": "Projeto_Tchauzinho",
 	"version": "0.0.1",
 	"scripts": {
-		"start": "react-scripts start"
+		"dev": "react-scripts start",
+		"build": "react-scripts build"
 	},
 	"dependencies": {
 		"@types/react": "^17.0.13",

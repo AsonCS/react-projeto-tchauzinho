@@ -117,7 +117,7 @@ export default function App() {
 				}
 			})
 		)
-		
+
 		hideLoading()
 	}
 
@@ -186,7 +186,9 @@ export default function App() {
 			const message = messageRef.current.value
 			const wavePortalContract = await getWavePortalContract()
 
-			const waveTxn = await wavePortalContract.doWave(message)
+			const waveTxn = await wavePortalContract.doWave(message, {
+				gasLimit: 300000,
+			})
 			showLoading(`Minerando... ${waveTxn.hash}`)
 
 			await waveTxn.wait()
