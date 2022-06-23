@@ -1,80 +1,46 @@
 import React, { useEffect, useState, createRef } from 'react'
+import abi from '../../utils/WavePortal.json'
 import { ethers } from 'ethers'
-import abi from '../utils/WavePortal.json'
 import Wave from './Wave'
-import styled from 'styled-components'
+import {
+	MainContainer,
+	DataContainer,
+	Header,
+	Bio,
+	WaveInput,
+	WaveButton,
+	ShotForm
+} from '../../styled'
 
-const MainContainer = styled.main`
-	display: flex;
-	justify-content: center;
-	width: 100%;
-	margin-top: 64px;
-`
-
-const DataContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	max-width: 600px;
-`
-
-const Header = styled.header`
-	color: #302eac;
-	font-weight: 900;
-	text-align: center;
-	font-size: 32px;
-	font-weight: 600;
-	text-shadow: 1px 1px #9999aa;
-`
-
-const Bio = styled.div`
-	text-align: center;
-	color: gray;
-	margin-top: 16px;
-`
-
-const WaveInput = styled.input`
-	background-color: #0000ff33;
-	cursor: pointer;
-	display: block;
-	margin: 16px auto;
-	padding: 8px;
-	border: 0;
-	border-radius: 10px;
-	width: 200px;
-`
-
-const WaveButton = styled.button`
-	background-color: #0000ff33;
-	cursor: pointer;
-	display: block;
-	margin: 16px auto;
-	padding: 8px;
-	border: 0;
-	border-radius: 10px;
-	width: 200px;
-`
-
-export default function App() {
+export default function BlockchainApp() {
 	/*
 	 * Apenas uma variável de estado que utilizamos para armazenar a carteira pública do usuário.
 	 */
 	const loadingText = 'Carregando...'
 	const [currentAccount, setCurrentAccount] = useState('')
-	const [loading, setLoading] = useState(loadingText)
+	const [loading, setLoading] = useState(
+		<React.Fragment>{loadingText}</React.Fragment>
+	)
 	const [waves, setWaves] = useState([])
-	const messageRef = createRef()
+	const messageRef = createRef<HTMLInputElement>()
 
 	const contractAddress = '0x06380A711Cc060581E8c78759e83e0f4ddd82B13'
 	const contractABI = abi.abi
 
 	let wavePortalContract = null
 
+	const getEthereum = (): any => {
+		/*
+		 * Primeiro checamos se temos acesso ao objeto window.ethereum
+		 */
+		return (window as any).ethereum
+	}
+
 	const showLoading = (message) => {
 		setLoading(
 			<React.Fragment>
 				{loadingText}
-				<br/>
+				<br />
 				{message}
 			</React.Fragment>
 		)
@@ -87,7 +53,7 @@ export default function App() {
 			return wavePortalContract
 		}
 
-		const { ethereum } = window
+		const ethereum = getEthereum()
 
 		if (!ethereum) {
 			alert('MetaMask não encontrada!')
@@ -152,10 +118,7 @@ export default function App() {
 
 	const checkIfWalletIsConnected = async () => {
 		try {
-			/*
-			 * Primeiro checamos se temos acesso ao objeto window.ethereum
-			 */
-			const { ethereum } = window
+			const ethereum = getEthereum()
 
 			if (!ethereum) {
 				console.log('Garanta que possua a Metamask instalada!')
@@ -186,7 +149,7 @@ export default function App() {
 		try {
 			showLoading('Conectando carteira')
 
-			const { ethereum } = window
+			const ethereum = getEthereum()
 
 			if (!ethereum) {
 				alert('MetaMask não encontrada!')
@@ -224,6 +187,8 @@ export default function App() {
 		} catch (error) {
 			console.log(error)
 		}
+
+		hideLoading()
 	}
 
 	const doLike = async (user) => {
@@ -239,6 +204,8 @@ export default function App() {
 		} catch (error) {
 			console.log(error)
 		}
+
+		hideLoading()
 	}
 
 	useEffect(() => {
@@ -246,11 +213,11 @@ export default function App() {
 			await checkIfWalletIsConnected()
 			hideLoading()
 			const wavePortalContract = await getWavePortalContract()
-	
+
 			if (!wavePortalContract) {
 				return
 			}
-	
+
 			wavePortalContract.on('NewWave', onNewWave)
 		}
 		init()
@@ -273,20 +240,20 @@ export default function App() {
 	if (currentAccount) {
 		connectButton = <React.Fragment></React.Fragment>
 		waveInterface = (
-			<form action='#' onSubmit={doWave}>
+			<ShotForm action='#' onSubmit={doWave}>
 				<WaveInput
 					type='text'
 					id='message'
 					name='message'
 					required
-					minLength='4'
-					maxLength='50'
-					size='15'
+					minLength={4}
+					maxLength={50}
+					size={15}
 					placeholder='Digite a menssagem'
 					ref={messageRef}
 				/>
 				<WaveButton>Dar Tchauzinho</WaveButton>
-			</form>
+			</ShotForm>
 		)
 	}
 
