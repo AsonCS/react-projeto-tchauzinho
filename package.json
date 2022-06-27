@@ -5,7 +5,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"serve": "next build && next export -o ./build && firebase serve -o 0.0.0.0 --only hosting",
+		"export": "next build && next export -o ./docs",
+		"serve": "next build && next export -o ./docs && firebase serve -o 0.0.0.0 --only hosting",
 		"test": "next test",
 		"eject": "next eject"
 	},
