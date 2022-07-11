@@ -1,17 +1,22 @@
 import React, { useEffect, useState, createRef } from 'react'
 import abi from '../../utils/WavePortal.json'
-import AppNavigation from '../navigation'
 import { ethers } from 'ethers'
-import Wave from './Wave'
 import {
-	MainContainer,
+	MainContainerBlack,
+	NftConnectButton,
+	NftTwitterLogo,
 	DataContainer,
-	Header,
-	Bio,
-	WaveInput,
-	WaveButton,
-	ShotForm
+	NftHeader,
+	NftFooter,
+	NftBio,
 } from '../../styled'
+import AppNavigation from '../navigation'
+
+// Constants
+const TWITTER_HANDLE = 'web3dev_'
+const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`
+const OPENSEA_LINK = ''
+const TOTAL_MINT_COUNT = 50
 
 export default function BlockchainApp() {
 	/*
@@ -231,64 +236,40 @@ export default function BlockchainApp() {
 	}, [])
 
 	if (loading) {
-		return <Header>{loading}</Header>
+		return <NftHeader>{loading}</NftHeader>
 	}
 
-	let connectButton = (
-		<WaveButton onClick={connectWallet}>Conectar carteira</WaveButton>
+	// Render Methods
+	const renderNotConnectedContainer = () => (
+		<NftConnectButton>Conectar Carteira</NftConnectButton>
 	)
-	let waveInterface = <React.Fragment></React.Fragment>
-	if (currentAccount) {
-		connectButton = <React.Fragment></React.Fragment>
-		waveInterface = (
-			<ShotForm action='#' onSubmit={doWave}>
-				<WaveInput
-					type='text'
-					id='message'
-					name='message'
-					required
-					minLength={4}
-					maxLength={50}
-					size={15}
-					placeholder='Digite a menssagem'
-					ref={messageRef}
-				/>
-				<WaveButton>Dar Tchauzinho</WaveButton>
-			</ShotForm>
-		)
-	}
-
-	const allWaves = waves.map((wave) => Wave(wave, doLike))
 
 	return (
-		<MainContainer>
+		<MainContainerBlack>
 			<DataContainer>
 				<AppNavigation />
-				
-				<Header>👋👋👋Olá Pessoal!👋👋👋</Header>
 
-				<Bio>
-					Que tal mandar um tchauzinho👋 pela blockchain???
-					<br />
-					Este é meu primeiro app usando blockchain🤓, então se
-					puder🙏
-					<br />
-					Conecte sua carteira 💵<b>Ethereum</b> wallet💵
-					<br />
-					E me manda um tchauzinho! please🙏😁😁😁
-					<br />
-					Você pode dar like nos usuários que já deram tchauzinho👋
-					também!!!
-				</Bio>
+				<NftHeader>Minha Coleção de NFT</NftHeader>
 
-				{waveInterface}
+				<NftBio>
+					Exclusivos! Maravilhosos! Únicos! Descubra seu NFT hoje.
+				</NftBio>
 
-				{connectButton}
+				{renderNotConnectedContainer()}
 
-				<br />
-
-				{allWaves}
+				<NftFooter>
+					<NftTwitterLogo
+						alt='Twitter Logo'
+						src='/twitter-logo.svg'
+					/>
+					<a
+						className='footer-text'
+						href={TWITTER_LINK}
+						target='_blank'
+						rel='noreferrer'
+					>{`feito com ❤️ pela @${TWITTER_HANDLE}`}</a>
+				</NftFooter>
 			</DataContainer>
-		</MainContainer>
+		</MainContainerBlack>
 	)
 }

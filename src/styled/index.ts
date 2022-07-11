@@ -2,9 +2,14 @@ import styled from 'styled-components'
 
 export const MainContainer = styled.main`
 	display: flex;
+	height: 100vh;
 	justify-content: center;
-	width: 100%;
-	margin-top: 64px;
+	padding-top: 3em;
+	width: 100vw;
+`
+
+export const MainContainerBlack = styled(MainContainer)`
+	background-color: #0d1116;
 `
 
 export const DataContainer = styled.div`
@@ -14,19 +19,42 @@ export const DataContainer = styled.div`
 	max-width: 600px;
 `
 
+export const AppNav = styled.nav`
+	left: 1em;
+	position: fixed;
+	text-decoration: none;
+	top: 1em;
+
+	a {
+		background-color: #cccccc;
+		border-radius: 0.3em;
+		color: #333333;
+		font-size: 0.7em;
+		font-weight: 900;
+		margin: 0.2em;
+		padding: 0.2em;
+	}
+
+	a:hover {
+		background-color: #333333;
+		color: #cccccc;
+		font-size: 0.8em;
+		text-decoration: none;
+	}
+`
+
 export const Header = styled.header`
 	color: #302eac;
+	font-size: 32px;
 	font-weight: 900;
 	text-align: center;
-	font-size: 32px;
-	font-weight: 600;
 	text-shadow: 1px 1px #9999aa;
 `
 
 export const Bio = styled.div`
-	text-align: center;
 	color: gray;
-	margin-top: 16px;
+	margin-top: 1em;
+	text-align: center;
 `
 
 export const Input = styled.input`
@@ -132,4 +160,81 @@ export const ShotLabeValue = styled.label`
 export const ShotSmall = styled.small`
 	color: gray;
 	font-size: 0.6em;
+`
+
+export const NftHeader = styled(Header)`
+	background: -webkit-linear-gradient(left, #60c657 30%, #35aee2 60%);
+	background-clip: text;
+	font-size: 3em;
+	text-shadow: none;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+	/* KeyFrames */
+	@-webkit-keyframes gradient-animation {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+	@-moz-keyframes gradient-animation {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+	@keyframes gradient-animation {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+`
+
+export const NftBio = styled(Bio)`
+	font-size: 1.5em;
+	font-weight: 900;
+	text-shadow: 1px 1px #bbbbbb;
+`
+
+export const NftConnectButton = styled.button`
+	animation: gradient-animation 4s ease infinite;
+	background: -webkit-linear-gradient(left, #60c657, #35aee2);
+	background-size: 200% 200%;
+	border: 0;
+	border-radius: 2em;
+	color: white;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: 900;
+	margin: 2em auto;
+	padding: 1em 3em;
+	width: fit-content;
+`
+
+export const NftFooter = styled.footer`
+	bottom: 0;
+	display: flex;
+	position: fixed;
+	width: 100vw;
+`
+
+export const NftTwitterLogo = styled.img`
+	width: 2em;
+	height: 2em;
 `

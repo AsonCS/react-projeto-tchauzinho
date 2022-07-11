@@ -1,4 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react'
+import AppNavigation from '../navigation'
 import {
 	MainContainer,
 	DataContainer,
@@ -126,6 +127,8 @@ export default function BetsApp() {
 	return (
 		<MainContainer>
 			<DataContainer>
+				<AppNavigation />
+				
 				<Header>Vamos apostar na Loteria 😁😁😁</Header>
 
 				<Bio>

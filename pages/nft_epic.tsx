@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
 
-import BlockchainApp from '../src/components/blockchain'
+import NftsApp from '../src/components/nfts'
 
 export default function Component() {
 	return (
@@ -13,20 +13,20 @@ export default function Component() {
 					name='viewport'
 					content='width=device-width, initial-scale=1'
 				/>
-				<meta name='og:title' content='Portal do Tchauzinho' />
-				<title>Portal do Tchauzinho</title>
+				<meta name='og:title' content='Vem gerar seu NFT...' />
+				<title>Vem gerar seu NFT...</title>
 				<meta
 					name='description'
-					content='Quero te conhecer! Manda um tchauzinho pra mim vai?'
+					content='Vem gerar seus NFTs aqui, pode colocar sua mensagem nele...'
 				/>
 
 				{/* <!-- Facebook --> */}
 				<meta property='og:type' content='website' />
 				<meta property='og:url' content='https://github.com/AsonCS/react-projeto-tchauzinho' />
-				<meta property='og:title' content='Portal do Tchauzinho' />
+				<meta property='og:title' content='Vem gerar seu NFT...' />
 				<meta
 					property='og:description'
-					content='Quero te conhecer! Manda um tchauzinho pra mim vai?'
+					content='Vem gerar seus NFTs aqui, pode colocar sua mensagem nele...'
 				/>
 				<meta
 					property='og:image'
@@ -39,17 +39,17 @@ export default function Component() {
 					property='twitter:url'
 					content='https://github.com/AsonCS/react-projeto-tchauzinho'
 				/>
-				<meta property='twitter:title' content='Portal do Tchauzinho' />
+				<meta property='twitter:title' content='Vem gerar seu NFT...' />
 				<meta
 					property='twitter:description'
-					content='Quero te conhecer! Manda um tchauzinho pra mim vai?'
+					content='Vem gerar seus NFTs aqui, pode colocar sua mensagem nele...'
 				/>
 				<meta
 					property='twitter:image'
 					content='https://github.com/AsonCS/react-projeto-tchauzinho/raw/master/public/favicon.ico'
 				/>
 			</Head>
-			<BlockchainApp />
+			<NftsApp />
 		</>
 	)
 }

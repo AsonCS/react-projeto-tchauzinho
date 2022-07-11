@@ -22,7 +22,7 @@ export default function Component() {
 
 				{/* <!-- Facebook --> */}
 				<meta property='og:type' content='website' />
-				<meta property='og:url' content='https://www.web3dev.com.br/' />
+				<meta property='og:url' content='https://github.com/AsonCS/react-projeto-tchauzinho' />
 				<meta property='og:title' content='Loteria Apostas' />
 				<meta
 					property='og:description'
@@ -30,14 +30,14 @@ export default function Component() {
 				/>
 				<meta
 					property='og:image'
-					content='https://i.imgur.com/MMOD2cB.png'
+					content='https://github.com/AsonCS/react-projeto-tchauzinho/raw/master/public/favicon.ico'
 				/>
 
 				{/* <!-- Twitter --> */}
 				<meta property='twitter:card' content='summary_large_image' />
 				<meta
 					property='twitter:url'
-					content='https://www.web3dev.com.br/'
+					content='https://github.com/AsonCS/react-projeto-tchauzinho'
 				/>
 				<meta property='twitter:title' content='Loteria Apostas' />
 				<meta
@@ -46,7 +46,7 @@ export default function Component() {
 				/>
 				<meta
 					property='twitter:image'
-					content='https://i.imgur.com/MMOD2cB.png'
+					content='https://github.com/AsonCS/react-projeto-tchauzinho/raw/master/public/favicon.ico'
 				/>
 			</Head>
 			<BetsApp />
