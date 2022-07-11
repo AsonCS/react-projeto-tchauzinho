@@ -126,9 +126,9 @@ export default function BetsApp() {
 
 	return (
 		<MainContainer>
+			<AppNavigation />
+
 			<DataContainer>
-				<AppNavigation />
-				
 				<Header>Vamos apostar na Loteria 😁😁😁</Header>
 
 				<Bio>

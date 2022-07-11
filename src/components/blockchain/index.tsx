@@ -10,7 +10,7 @@ import {
 	Bio,
 	WaveInput,
 	WaveButton,
-	ShotForm
+	ShotForm,
 } from '../../styled'
 
 export default function BlockchainApp() {
@@ -262,9 +262,9 @@ export default function BlockchainApp() {
 
 	return (
 		<MainContainer>
+			<AppNavigation />
+
 			<DataContainer>
-				<AppNavigation />
-				
 				<Header>👋👋👋Olá Pessoal!👋👋👋</Header>
 
 				<Bio>

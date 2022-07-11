@@ -1,29 +1,31 @@
 import styled from 'styled-components'
 
-export const MainContainer = styled.main`
+export const MainContainer = styled.div`
+	align-items: center;
 	display: flex;
-	height: 100vh;
-	justify-content: center;
-	padding-top: 3em;
-	width: 100vw;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100vh;
+	min-width: 100vw;
 `
 
 export const MainContainerBlack = styled(MainContainer)`
 	background-color: #0d1116;
 `
 
-export const DataContainer = styled.div`
+export const DataContainer = styled.main`
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	max-width: 600px;
+	min-height: 80vh;
 `
 
 export const AppNav = styled.nav`
-	left: 1em;
-	position: fixed;
+	align-self: flex-start;
+	margin-left: 1em;
+	margin-top: 1em;
 	text-decoration: none;
-	top: 1em;
 
 	a {
 		background-color: #cccccc;
@@ -55,6 +57,11 @@ export const Bio = styled.div`
 	color: gray;
 	margin-top: 1em;
 	text-align: center;
+
+	a {
+		display: block;
+		font-size: 0.8em;
+	}
 `
 
 export const Input = styled.input`
@@ -67,6 +74,11 @@ export const Input = styled.input`
 `
 
 export const WaveInput = styled(Input)`
+	width: 200px;
+`
+
+export const NftInput = styled(Input)`
+	color: white;
 	width: 200px;
 `
 
@@ -124,6 +136,7 @@ export const WaveLi = styled.li`
 
 export const ShotForm = styled.form`
 	text-align: center;
+	margin-top: 2em;
 `
 
 export const ShotTable = styled.table`
@@ -210,9 +223,14 @@ export const NftBio = styled(Bio)`
 	font-size: 1.5em;
 	font-weight: 900;
 	text-shadow: 1px 1px #bbbbbb;
+
+	a {
+		display: block;
+		font-size: 1sem;
+	}
 `
 
-export const NftConnectButton = styled.button`
+export const NftButton = styled.button`
 	animation: gradient-animation 4s ease infinite;
 	background: -webkit-linear-gradient(left, #60c657, #35aee2);
 	background-size: 200% 200%;
@@ -220,6 +238,7 @@ export const NftConnectButton = styled.button`
 	border-radius: 2em;
 	color: white;
 	cursor: pointer;
+	display: block;
 	font-size: 1em;
 	font-weight: 900;
 	margin: 2em auto;
@@ -228,13 +247,15 @@ export const NftConnectButton = styled.button`
 `
 
 export const NftFooter = styled.footer`
-	bottom: 0;
 	display: flex;
-	position: fixed;
-	width: 100vw;
+	margin: 2em 0;
 `
 
 export const NftTwitterLogo = styled.img`
 	width: 2em;
 	height: 2em;
+`
+
+export const NftA = styled.a`
+
 `
