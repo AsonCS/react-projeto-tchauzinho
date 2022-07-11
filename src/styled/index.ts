@@ -6,7 +6,6 @@ export const MainContainer = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	min-height: 100vh;
-	min-width: 100vw;
 `
 
 export const MainContainerBlack = styled(MainContainer)`
@@ -60,6 +59,10 @@ export const Bio = styled.div`
 
 	a {
 		display: block;
+		font-size: 0.8em;
+	}
+
+	p {
 		font-size: 0.8em;
 	}
 `
@@ -226,7 +229,11 @@ export const NftBio = styled(Bio)`
 
 	a {
 		display: block;
-		font-size: 1sem;
+		font-size: 1em;
+	}
+
+	span {
+		display: block;
 	}
 `
 
@@ -256,6 +263,4 @@ export const NftTwitterLogo = styled.img`
 	height: 2em;
 `
 
-export const NftA = styled.a`
-
-`
+export const NftA = styled.a``

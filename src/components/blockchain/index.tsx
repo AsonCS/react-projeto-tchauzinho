@@ -211,9 +211,9 @@ export default function BlockchainApp() {
 
 	useEffect(() => {
 		async function init() {
+			await getWavePortalContract()
 			await checkIfWalletIsConnected()
 			hideLoading()
-			const wavePortalContract = await getWavePortalContract()
 
 			if (!wavePortalContract) {
 				return

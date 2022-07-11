@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createRef } from 'react'
 import abi from '../../utils/MyEpicNFT.json'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import {
 	MainContainerBlack,
 	NftTwitterLogo,
@@ -27,13 +27,15 @@ export default function NftApp() {
 	 */
 	const loadingText = 'Carregando...'
 	const [currentAccount, setCurrentAccount] = useState('')
+	const [mintedByUser, setMintedByUser] = useState(0)
 	const [loading, setLoading] = useState(
 		<React.Fragment>{loadingText}</React.Fragment>
 	)
+	const [mintedMessage, setMintedMessage] = useState('')
 	const [links, setLinks] = useState<Array<JSX.Element>>([])
 	const messageRef = createRef<HTMLInputElement>()
 
-	const contractAddress = '0x65334eea0841B24e9a96bAFa58A7943407074B4B'
+	const contractAddress = '0x7c61f083d7C7CdC5D45CcC36be637b064A991E53'
 	const contractABI = abi.abi
 
 	let myEpicNFTContract = null
@@ -158,6 +160,7 @@ export default function NftApp() {
 				)
 				return old
 			})
+			setMintedByUser((old) => old + 1)
 		} catch (error) {
 			console.log(error)
 		}
@@ -165,12 +168,52 @@ export default function NftApp() {
 		hideLoading()
 	}
 
+	const getMintedByUser = async () => {
+		showLoading(`Verificando quantos NFTs vc tem...`)
+
+		try {
+			const myEpicNFTContract = await getMyEpicNFTContract()
+
+			if (!myEpicNFTContract) return
+
+			const mintedByUser = await myEpicNFTContract.getMintedByUser()
+
+			setMintedByUser(parseInt(mintedByUser))
+		} catch (error) {
+			console.log(error)
+		}
+
+		hideLoading()
+	}
+
+	const onNewEpicNFTMinted = (from: string, tokenId: BigNumber) => {
+		setMintedMessage(
+			`Olá ${from}! Já cunhamos seu NFT.\n
+			Pode ser que esteja branco agora.\n
+			Demora no máximo 10 minutos para aparecer no OpenSea.\n
+			Aqui está o link: <https://testnets.opensea.io/assets/${contractAddress}/${tokenId.toNumber()}>`
+		)
+	}
+
 	useEffect(() => {
 		async function init() {
+			await getMyEpicNFTContract()
 			await checkIfWalletIsConnected()
+			await getMintedByUser()
+
+			if (!myEpicNFTContract) return
+
+			myEpicNFTContract.on('NewEpicNFTMinted', onNewEpicNFTMinted)
+
 			hideLoading()
 		}
 		init()
+
+		return () => {
+			if (myEpicNFTContract) {
+				myEpicNFTContract.off('NewEpicNFTMinted', onNewEpicNFTMinted)
+			}
+		}
 	}, [])
 
 	if (loading) {
@@ -217,6 +260,7 @@ export default function NftApp() {
 
 				<NftBio>
 					Exclusivos! Maravilhosos! Únicos! Descubra seu NFT hoje.
+					<span>Vc tem {mintedByUser}/20 NFTs mintados...</span>
 					<a
 						href='https://testnets.opensea.io/collection/svgcollored'
 						target='_blank'
@@ -228,6 +272,7 @@ export default function NftApp() {
 				{renderDataByCurrentAccount()}
 
 				<Bio>
+					<p>{mintedMessage}</p>
 					<p>{links}</p>
 				</Bio>
 			</DataContainer>
