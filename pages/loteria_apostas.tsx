@@ -30,7 +30,7 @@ export default function Component() {
 				/>
 				<meta
 					property='og:image'
-					content='https://github.com/AsonCS/react-projeto-tchauzinho/raw/master/public/favicon.ico'
+					content='https://portal-do-tchauzinho.web.app/favicon.ico'
 				/>
 
 				{/* <!-- Twitter --> */}
@@ -46,7 +46,7 @@ export default function Component() {
 				/>
 				<meta
 					property='twitter:image'
-					content='https://github.com/AsonCS/react-projeto-tchauzinho/raw/master/public/favicon.ico'
+					content='https://portal-do-tchauzinho.web.app/favicon.ico'
 				/>
 			</Head>
 			<BetsApp />

@@ -1,4 +1,65 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
+
+export const GlobalStyle = createGlobalStyle`
+	/* Reset CSS (Necolas Reset CSS <3) */
+	:root {
+		--blue: #3772ff;
+		--blue-alpha: #3772ff66;
+		--green: #36d6ad;
+		--white: #ffffff;
+		--coral: #fc7071;
+		--creme: #fcf0e3;
+		--gray: #464646;
+		--dark-gray: #737380;
+		--light-gray: #bcbcbc;
+		--light-2-gray: #f6f6f6;
+		--alpha-gray: #66666611;
+
+		--font-main: 'Poppins', sans-serif;
+		--font-secondary: 'IBM Plex Sans', sans-serif;
+	}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	html, body {
+		font-family: var(--font-main);
+		line-height: 1.6;
+		font-size: 1em;
+	}
+	#__next {
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
+	img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+	a {
+		color: #0070f3;
+		cursor: pointer;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	a:active {
+		text-decoration: none;
+	}
+	button {
+		border: none;
+		border-radius: 0.5em;
+		cursor: pointer;
+		font-family: var(--font-main);
+		height: fit-content;
+		margin: 0;
+		padding: 0;
+		width: fit-content;
+	}
+`
 
 export const MainContainer = styled.div`
 	align-items: center;

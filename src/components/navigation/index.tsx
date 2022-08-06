@@ -1,8 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react'
 import Link from 'next/link'
-import {
-	AppNav
-} from '../../styled'
+import { AppNav } from '../../styled'
 
 export default function AppNavigation() {
 	return (
@@ -19,6 +17,9 @@ export default function AppNavigation() {
 			</Link>
 			<Link href={`/nft_epic${process.env.NEXT_PUBLIC_URL_EXTENSION}`}>
 				<a>Vem gerar seu NFT...</a>
+			</Link>
+			<Link href={`/chicken_dao${process.env.NEXT_PUBLIC_URL_EXTENSION}`}>
+				<a>Chicken DAO</a>
 			</Link>
 		</AppNav>
 	)
