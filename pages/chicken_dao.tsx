@@ -13,9 +13,9 @@ export default function Component() {
 					name='viewport'
 					content='width=device-width, initial-scale=1'
 				/>
-				<meta name='og:title' content='Chicken DAO' />
-				<title>Chicken DAO</title>
-				<meta name='description' content='Chicken DAO' />
+				<meta name='og:title' content='Chicken DAO 🐣🐥🐔🐓' />
+				<title>Chicken DAO 🐣🐥🐔🐓</title>
+				<meta name='description' content='Chicken DAO 🐣🐥🐔🐓' />
 
 				{/* <!-- Facebook --> */}
 				<meta property='og:type' content='website' />
@@ -23,8 +23,8 @@ export default function Component() {
 					property='og:url'
 					content='https://github.com/AsonCS/react-projeto-tchauzinho'
 				/>
-				<meta property='og:title' content='Chicken DAO' />
-				<meta property='og:description' content='Chicken DAO' />
+				<meta property='og:title' content='Chicken DAO 🐣🐥🐔🐓' />
+				<meta property='og:description' content='Chicken DAO 🐣🐥🐔🐓' />
 				<meta
 					property='og:image'
 					content='https://portal-do-tchauzinho.web.app/favicon.ico'
@@ -36,8 +36,8 @@ export default function Component() {
 					property='twitter:url'
 					content='https://github.com/AsonCS/react-projeto-tchauzinho'
 				/>
-				<meta property='twitter:title' content='Chicken DAO' />
-				<meta property='twitter:description' content='Chicken DAO' />
+				<meta property='twitter:title' content='Chicken DAO 🐣🐥🐔🐓' />
+				<meta property='twitter:description' content='Chicken DAO 🐣🐥🐔🐓' />
 				<meta
 					property='twitter:image'
 					content='https://portal-do-tchauzinho.web.app/favicon.ico'

@@ -4,7 +4,9 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const editionDrop = sdk.getEditionDrop(process.env.EDITION_DROP_ADDRESS)
+const editionDrop = sdk.getEditionDrop(
+	process.env.NEXT_PUBLIC_EDITION_DROP_ADDRESS
+)
 
 const run = async () => {
 	try {

@@ -1,46 +1,67 @@
-import { useAddress, useMetamask } from '@thirdweb-dev/react'
-import React from 'react'
+import { useAddress, useMetamask, useEditionDrop } from '@thirdweb-dev/react'
+import { useState, useEffect } from 'react'
 
 import { DataContainer, MainContainerBlack } from '../../styled'
+import LoggedNotMinted from './LoggedNotMinted'
 import AppNavigation from '../navigation'
-import * as Styled from './Styled'
+import LoggedMinted from './LoggedMinted'
+import NotLogged from './NotLogged'
 
 export default function Home() {
+	const TOKEN_ID = 0
+	const TOKEN_AMOUNT = 1
+
 	// Use o hook connectWallet que o thirdweb nos dá.
 	const address = useAddress()
 	const connectWithMetamask = useMetamask()
-	console.log('👋 Address:', address)
+	const editionDrop = useEditionDrop(
+		process.env.NEXT_PUBLIC_EDITION_DROP_ADDRESS
+	)
+	// Variável de estado para sabermos se o usuário tem nosso NFT.
+	const [hasClaimedNFT, setHasClaimedNFT] = useState(false)
+	// isClaiming nos ajuda a saber se está no estado de carregando enquanto o NFT é cunhado.
+	const [isClaiming, setIsClaiming] = useState(false)
 
-	// Esse é o caso em que o usuário ainda não conectou sua carteira
-	// ao nosso webapp. Deixe ele chamar connectWallet.
-	const notLogged = () => {
+	useEffect(() => {
+		// Se ele não tiver uma carteira conectada, saia!
 		if (!address) {
-			return (
-				<Styled.Div>
-					<h1>You are welcome à Chicken DAO</h1>
-					<h2>A DAO dos investidores de frangos</h2>
-					<Styled.Button onClick={connectWithMetamask}>
-						Conecte sua Wallet
-					</Styled.Button>
-				</Styled.Div>
-			)
-		} else {
-			return <></>
+			return
 		}
-	}
+		console.log('👋 Address:', address)
 
-	// Esse é o caso em que temos o endereço do usuário
-	// o que significa que ele conectou sua carteira ao nosso site!
-	const logged = () => {
-		if (address) {
-			return (
-				<Styled.Div>
-					<h1>👀</h1>
-					<h2>Carteira conectada, e agora 🤔🤔🤔</h2>
-				</Styled.Div>
+		const checkBalance = async () => {
+			try {
+				const balance = await editionDrop.balanceOf(address, TOKEN_ID)
+				// Se o saldo for maior do que 0, ele tem nosso NFT!
+				if (balance.gt(0)) {
+					setHasClaimedNFT(true)
+					console.log('🌟 Esse usuário tem o NFT de membro!')
+				} else {
+					setHasClaimedNFT(false)
+					console.log('😭 Esse usuário NÃO tem o NFT de membro.')
+				}
+			} catch (error) {
+				setHasClaimedNFT(false)
+				console.error('Falha ao ler saldo', error)
+			}
+		}
+		checkBalance()
+	}, [address, editionDrop])
+
+	const mintNft = async () => {
+		try {
+			setIsClaiming(true)
+			await editionDrop.claim(TOKEN_ID.toString(), TOKEN_AMOUNT)
+			console.log(
+				`🌊 Cunhado com sucesso! Olhe na OpenSea:
+				https://testnets.opensea.io/assets/${editionDrop.getAddress()}/${TOKEN_ID}`
 			)
-		} else {
-			return <></>
+			setHasClaimedNFT(true)
+		} catch (error) {
+			setHasClaimedNFT(false)
+			console.error('Falha ao cunhar NFT', error)
+		} finally {
+			setIsClaiming(false)
 		}
 	}
 
@@ -49,8 +70,20 @@ export default function Home() {
 			<AppNavigation />
 
 			<DataContainer>
-				{notLogged()}
-				{logged()}
+				{!address ? (
+					<NotLogged connectWithMetamask={connectWithMetamask} />
+				) : (
+					<>
+						{hasClaimedNFT ? (
+							<LoggedMinted editionDrop={editionDrop} />
+						) : (
+							<LoggedNotMinted
+								isClaiming={isClaiming}
+								mintNft={mintNft}
+							/>
+						)}
+					</>
+				)}
 			</DataContainer>
 		</MainContainerBlack>
 	)
