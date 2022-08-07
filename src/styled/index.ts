@@ -3,13 +3,15 @@ import styled, { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
 	/* Reset CSS (Necolas Reset CSS <3) */
 	:root {
+		--black: #0d1116;
 		--blue: #3772ff;
 		--blue-alpha: #3772ff66;
+		--blue-light: #00bcd4;
 		--green: #36d6ad;
 		--white: #ffffff;
 		--coral: #fc7071;
 		--creme: #fcf0e3;
-		--gray: #464646;
+		--gray: #262626;
 		--dark-gray: #737380;
 		--light-gray: #bcbcbc;
 		--light-2-gray: #f6f6f6;

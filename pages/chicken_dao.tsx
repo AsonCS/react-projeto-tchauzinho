@@ -1,9 +1,14 @@
+// Import thirdweb provider and Rinkeby ChainId
+import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react'
 import Head from 'next/head'
 import React from 'react'
 
 import ChickenDAOApp from '../src/components/chicken_dao'
 
 export default function Component() {
+	// This is the chainId your dApp will work on.
+	const ACTIVE_CHAIN_ID = ChainId.Rinkeby
+
 	return (
 		<>
 			<Head>
@@ -24,7 +29,10 @@ export default function Component() {
 					content='https://github.com/AsonCS/react-projeto-tchauzinho'
 				/>
 				<meta property='og:title' content='Chicken DAO 🐣🐥🐔🐓' />
-				<meta property='og:description' content='Chicken DAO 🐣🐥🐔🐓' />
+				<meta
+					property='og:description'
+					content='Chicken DAO 🐣🐥🐔🐓'
+				/>
 				<meta
 					property='og:image'
 					content='https://portal-do-tchauzinho.web.app/favicon.ico'
@@ -37,13 +45,18 @@ export default function Component() {
 					content='https://github.com/AsonCS/react-projeto-tchauzinho'
 				/>
 				<meta property='twitter:title' content='Chicken DAO 🐣🐥🐔🐓' />
-				<meta property='twitter:description' content='Chicken DAO 🐣🐥🐔🐓' />
+				<meta
+					property='twitter:description'
+					content='Chicken DAO 🐣🐥🐔🐓'
+				/>
 				<meta
 					property='twitter:image'
 					content='https://portal-do-tchauzinho.web.app/favicon.ico'
 				/>
 			</Head>
-			<ChickenDAOApp />
+			<ThirdwebProvider desiredChainId={ACTIVE_CHAIN_ID}>
+				<ChickenDAOApp />
+			</ThirdwebProvider>
 		</>
 	)
 }

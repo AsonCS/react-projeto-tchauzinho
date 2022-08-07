@@ -1,15 +1,13 @@
+import { EditionDrop, Proposal } from '@thirdweb-dev/sdk'
+import { useToken, useVote } from '@thirdweb-dev/react'
 import { useState, useEffect, useMemo } from 'react'
-import { EditionDrop } from '@thirdweb-dev/sdk'
-import {
-	useAddress,
-	useMetamask,
-	useEditionDrop,
-	useToken,
-} from '@thirdweb-dev/react'
 
+import Proposals from './Proposals'
 import * as Styled from './Styled'
+import Members from './Members'
 
 interface Props {
+	address: string
 	editionDrop: EditionDrop
 }
 
@@ -17,11 +15,14 @@ interface Props {
 // Apenas membros da DAO vão ver isso. Renderize todos os membros + quantidade de tokens
 export default function LoggedMinted(props: Props) {
 	const token = useToken(process.env.NEXT_PUBLIC_TOKEN_ADDRESS)
+	const vote = useVote(process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS)
 
 	// Guarda a quantidade de tokens que cada membro tem nessa variável de estado.
 	const [memberTokenAmounts, setMemberTokenAmounts] = useState([])
 	// O array guardando todos os endereços dos nosso membros.
 	const [memberAddresses, setMemberAddresses] = useState([])
+
+	const [proposals, setProposals] = useState<Array<Proposal>>([])
 
 	// Agora, nós combinamos os memberAddresses e os memberTokenAmounts em um único array
 	const memberList = useMemo(() => {
@@ -71,14 +72,24 @@ export default function LoggedMinted(props: Props) {
 		getAllBalances()
 	}, [token?.history])
 
-	// Uma função para diminuir o endereço da carteira de alguém, não é necessário mostrar a coisa toda.
-	const formatAddress = (str) => {
-		return str.substring(0, 6) + '...' + str.substring(str.length - 4)
-	}
+	// Recupere todas as propostas existentes no contrato.
+	useEffect(() => {
+		if (!vote) {
+			return
+		}
 
-	const formatTokenAmount = (value: any) => {
-		return parseFloat(value).toFixed(2).padStart(10, '0')
-	}
+		// Uma chamada simples para vote.getAll() para pegar as propostas.
+		const getAllProposals = async () => {
+			try {
+				const proposals = await vote.getAll()
+				setProposals(proposals)
+				console.log('🌈 Propostas:', proposals)
+			} catch (error) {
+				console.log('falha ao buscar propostas', error)
+			}
+		}
+		getAllProposals()
+	}, [vote])
 
 	return (
 		<Styled.Div>
@@ -90,20 +101,13 @@ export default function LoggedMinted(props: Props) {
 			<Styled.H2>
 				Parabéns por fazer parte desse fundo de investimentos...
 			</Styled.H2>
-			<Styled.Section>
-				<p>Lista de Membros</p>
-				<small>Endereço Wallet / Quantidade de $CLUCK</small>
-				<ul>
-					{memberList.map((member) => {
-						return (
-							<li key={member.address}>
-								{formatAddress(member.address)}:{' '}
-								{formatTokenAmount(member.tokenAmount)}
-							</li>
-						)
-					})}
-				</ul>
-			</Styled.Section>
+			<Members memberList={memberList} />
+			<Proposals
+				address={props.address}
+				proposals={proposals}
+				token={token}
+				vote={vote}
+			/>
 		</Styled.Div>
 	)
 }
